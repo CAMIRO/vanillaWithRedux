@@ -44,14 +44,22 @@ const store = createStore(
 	//enhancer
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 )
+function render(){
+	const $container = document.getElementById('playlist');
+	const playlist = store.getState()
+	$container.innerHTML = '';
+	playlist.forEach((item)=>{
+		const template = document.createElement('p');
+		template.textContent = item.title;
+		$container.appendChild(template)
+	})
+}
+render()
 
-const $container = document.getElementById('playlist');
-const playlist = store.getState()
-playlist.forEach((item)=>{
-	const template = document.createElement('p');
-	template.textContent = item.title;
-	$container.appendChild(template)
+function handleChange(){
+	render();
+}
 
-})
+store.subscribe(handleChange)
 
 
